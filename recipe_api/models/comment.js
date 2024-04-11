@@ -10,9 +10,9 @@ const commentSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
-    meal: {
+    recipe: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Meal',
+        ref: 'Recipe',
         required: true
     },
     createdAt: {
