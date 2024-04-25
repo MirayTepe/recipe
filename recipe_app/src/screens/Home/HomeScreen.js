@@ -60,7 +60,12 @@ function DrawerStack() {
  export default function AppContainer() {
   return(
     <NavigationContainer>
-      <DrawerStack/>
+      <Stack.Navigator initialRouteName='Welcome' screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="Welcome" component={WelcomeScreen} />
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Register" component={RegisterScreen} />
+        <DrawerStack/>
+      </Stack.Navigator>
     </NavigationContainer>
   )
 } 
