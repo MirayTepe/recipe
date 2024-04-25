@@ -13,6 +13,10 @@ const recipeSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    category: {
+        type: String,
+        required: true
+    },
     video: {
         type: String
     },
