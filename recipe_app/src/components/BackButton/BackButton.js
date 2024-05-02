@@ -10,7 +10,7 @@ const BackButton = (props) => {
       <SvgUri
         width="24"
         height="24"
-        source={require("../../assets/icons/backArrow.svg")} // SVG dosyasının yolu
+        source={require("../../../assets/icons/backArrow.svg")} // SVG dosyasının yolu
       />
     </TouchableHighlight>
   );
@@ -21,3 +21,4 @@ BackButton.propTypes = {
   source: PropTypes.number,
   title: PropTypes.string,
 }; 
+

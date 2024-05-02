@@ -1,23 +1,28 @@
-import React from "react";
-import { TouchableHighlight, Image, Text, View } from "react-native";
-import PropTypes from "prop-types";
-import styles from "./styles";
+import { StyleSheet } from "react-native";
 
-export default function MenuButton(props) {
-  const { title, onPress, source } = props;
+const styles = StyleSheet.create({
+  btnContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 180,
+    paddingHorizontal: 12,
+    paddingVertical: 16,
+    margin: 10,
+    backgroundColor: "white",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 3,
+  },
+  btnIcon: {
+    height: 14,
+    width: 14,
+  },
+});
 
-  return (
-    <TouchableHighlight onPress={onPress} style={styles.btnClickContain} underlayColor="rgba(128, 128, 128, 0.1)">
-      <View style={styles.btnContainer}>
-        <Image source={source} style={styles.btnIcon} />
-        <Text style={styles.btnText}>{title}</Text>
-      </View>
-    </TouchableHighlight>
-  );
-}
-
-MenuButton.propTypes = {
-  onPress: PropTypes.func,
-  source: PropTypes.number,
-  title: PropTypes.string,
-};
+export default styles;
