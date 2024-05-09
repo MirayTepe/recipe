@@ -2,9 +2,14 @@ import { StyleSheet } from 'react-native';
 import { RecipeCard } from '../../AppStyles';
 
 const styles = StyleSheet.create({
-  titleIngredient: {
-    fontWeight: 'bold',
-    fontSize: 20
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  imageContainer: {
+    borderBottomWidth: 0.4,
+    marginBottom: 10,
+    borderBottomColor: "grey",
   },
   photoIngredient: {
     width: '100%',
@@ -18,7 +23,14 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     fontWeight: 'bold'
   },
-  container: RecipeCard.container,
+  recipeContainer: {
+    ...RecipeCard.container,
+    marginVertical: 10,
+    flex: 1,
+    backgroundColor: '#fcfcfc',
+    borderRadius: 20, 
+    overflow: 'hidden',
+  },
   photo: RecipeCard.photo,
   title: RecipeCard.title,
   category: RecipeCard.category

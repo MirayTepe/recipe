@@ -15,6 +15,12 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    fullName: {
+        type: String
+    },
+    dateOfBirth: {
+        type: Date
+    },
     profilePicture: {
         type: String,
         default: 'default_profile_picture_url'

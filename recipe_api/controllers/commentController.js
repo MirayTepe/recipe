@@ -1,19 +1,11 @@
-const CommentRepository = require('../repositories/commentRepository');
+const commentRepository = require('../repositories/commentRepository');
 
-exports.createComment = async (req, res) => {
-    const { content } = req.body;
-    const createdBy = req.user.id;
-
-    const newComment = await CommentRepository.createComment({ content, createdBy, recipe: req.params.recipeId });
-
-    res.status(201).json(newComment);
+exports.createComment = async (req, res, next) => {
+    const comment = await commentRepository.createComment(req.body);
+    res.status(201).json(comment);
 };
 
-exports.getCommentById = async (req, res) => {
-    const comment = await CommentRepository.getCommentById(req.params.id);
-    if (!comment) {
-        return res.status(404).json({ message: 'Comment not found' });
-    }
-
+exports.getCommentById = async (req, res, next) => {
+    const comment = await commentRepository.getCommentById(req.params.commentId);
     res.status(200).json(comment);
 };

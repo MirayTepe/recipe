@@ -4,9 +4,9 @@ const authMiddleware = require('../middleware/authMiddleware')
 
 const router = express.Router();
 
-router.post('/', authMiddleware, RecipeController.createRecipe);
+router.post('/', RecipeController.createRecipe);
 router.get('/:id', RecipeController.getRecipeById);
-router.post('/:id/like', authMiddleware, RecipeController.likeRecipe);
-router.post('/:id/comment', authMiddleware, RecipeController.addCommentToRecipe);
+router.post('/:id/like', RecipeController.likeRecipe);
+router.post('/:id/comment', RecipeController.addCommentToRecipe);
 
 module.exports = router;

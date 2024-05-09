@@ -1,10 +1,9 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
-import { FlatList, Text, View, TouchableHighlight, Pressable } from "react-native";
+import { FlatList, Text, View, Image, TouchableHighlight, Pressable } from "react-native";
 import styles from "./styles";
 import MenuImage from "../../components/MenuImage/MenuImage";
 import { getCategoryName, getRecipesByRecipeName, getRecipesByCategoryName, getRecipesByIngredientName } from "../../data/MockDataAPI";
-import { TextInput, Image } from "react-native";
-import SvgUri from "react-native-svg-uri"; // Eklediğimiz kütüphane
+import { TextInput } from "react-native-gesture-handler";
 
 export default function SearchScreen(props) {
   const { navigation } = props;
@@ -23,16 +22,14 @@ export default function SearchScreen(props) {
       ),
       headerTitle: () => (
         <View style={styles.searchContainer}>
-          {/* SVG için SvgUri kullanıyoruz */}
-          <SvgUri width="20" height="20" source={require("../../../assets/icons/search.svg")} />
+          <Image style={styles.searchIcon} source={require("../../../assets/icons/search.png")} />
           <TextInput
             style={styles.searchInput}
             onChangeText={handleSearch}
             value={value}
           />
           <Pressable onPress={() => handleSearch("")}>
-            {/* Kapatma işareti için SvgUri */}
-            <SvgUri width="20" height="20" source={require("../../../assets/icons/close.svg")} />
+          <Image style={styles.searchIcon} source={require("../../../assets/icons/close.png")} />
           </Pressable>
         </View>
       ),
@@ -64,8 +61,7 @@ export default function SearchScreen(props) {
   const renderRecipes = ({ item }) => (
     <TouchableHighlight underlayColor="rgba(73,182,77,0.9)" onPress={() => onPressRecipe(item)}>
       <View style={styles.container}>
-        {/* Örnek olarak SVG kullanımı */}
-        <SvgUri width="100" height="100" source={{ uri: item.photo_url }} />
+        <Image style={styles.photo} source={{ uri: item.photo_url }} />
         <Text style={styles.title}>{item.title}</Text>
         <Text style={styles.category}>{getCategoryName(item.categoryId)}</Text>
       </View>

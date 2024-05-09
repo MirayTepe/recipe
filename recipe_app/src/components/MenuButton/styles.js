@@ -1,28 +1,27 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
+  btnClickContain: {
+    flexDirection: 'row',
+    padding: 5,
+    marginTop: 5,
+    marginBottom: 5,
+    borderRadius:6
+  },
   btnContainer: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 180,
-    paddingHorizontal: 12,
-    paddingVertical: 16,
-    margin: 10,
-    backgroundColor: "white",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 3,
+    flexDirection: 'row',
+    alignItems: 'flex-start'
   },
   btnIcon: {
-    height: 14,
-    width: 14,
+    height: 25,
+    width: 25
   },
+  btnText: {
+    fontSize: 16,
+    marginLeft: 10,
+    marginTop: 2
+  }
 });
 
 export default styles;

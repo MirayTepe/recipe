@@ -1,4 +1,3 @@
-
 import React, { useLayoutEffect, useRef, useState } from "react";
 import {
   ScrollView,
@@ -17,6 +16,10 @@ import {
 } from "../../data/MockDataAPI";
 import BackButton from "../../components/BackButton/BackButton";
 import ViewIngredientsButton from "../../components/ViewIngredientsButton/ViewIngredientsButton";
+import LikeButton from "../../components/LikeButton/LikeButton";
+import CommentButton from "../../components/CommentButton/CommentButton";
+import SaveButton from "../../components/SaveButton/SaveButton";
+import ShareButton from "../../components/ShareButton/ShareButton";
 
 const { width: viewportWidth } = Dimensions.get("window");
 
@@ -52,6 +55,7 @@ export default function RecipeScreen(props) {
       </View>
     </TouchableHighlight>
   );
+
 
   const onPressIngredient = (item) => {
     var name = getIngredientName(item);
@@ -91,7 +95,17 @@ export default function RecipeScreen(props) {
             tappableDots={!!slider1Ref.current}
           />
         </View>
+        <View style={styles.infoContainer}>
+          <View style={styles.buttonContainer}>
+            <LikeButton onPress={() => { }} liked={false} />
+            <CommentButton onPress={() => { }} />
+            <SaveButton onPress={() => { }} saved={false} />
+            <ShareButton onPress={() => {}} />
+          </View>
+        </View>
+
       </View>
+
       <View style={styles.infoRecipeContainer}>
         <Text style={styles.infoRecipeName}>{item.title}</Text>
         <View style={styles.infoContainer}>
@@ -111,6 +125,7 @@ export default function RecipeScreen(props) {
             style={styles.infoPhoto}
             source={require("../../../assets/icons/time.png")}
           />
+
           <Text style={styles.infoRecipe}>{item.time} minutes </Text>
         </View>
 
@@ -123,6 +138,7 @@ export default function RecipeScreen(props) {
             }}
           />
         </View>
+
         <View style={styles.infoContainer}>
           <Text style={styles.infoDescriptionRecipe}>{item.description}</Text>
         </View>

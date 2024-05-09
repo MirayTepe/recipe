@@ -5,7 +5,7 @@ import styles from "./styles";
 export default function SplashScreen() {
   return (
     <View style={styles.container}>
-      <Image style={styles.photo} source={require("../../../assets/images/logo.png")} />
+      <Image style={styles.photo} source={require("../../../assets/icons/splash.png")} />
     </View>
   );
 }

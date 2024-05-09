@@ -10,7 +10,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'flex-start',
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
+   
+
   }
 });
 

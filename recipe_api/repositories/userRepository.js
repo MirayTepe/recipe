@@ -12,3 +12,7 @@ exports.getUserById = async (userId) => {
 exports.getUserByEmail = async (email) => {
     return await User.findOne({ email });
 };
+exports.login = async (email, password) => {
+    const user = await User.findOne({ email, password });
+    return user;
+};

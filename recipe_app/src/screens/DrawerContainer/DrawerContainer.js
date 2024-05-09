@@ -3,51 +3,69 @@ import { View } from "react-native";
 import PropTypes from "prop-types";
 import styles from "./styles";
 import MenuButton from "../../components/MenuButton/MenuButton";
-import SvgUri from 'react-native-svg-uri'; // SVG dosyalarını görüntülemek için
 
-export default function DrawerContainer({ navigation }) {
+export default function DrawerContainer(props) {
+  const { navigation } = props;
   return (
     <View style={styles.content}>
       <View style={styles.container}>
+       <MenuButton
+          title="PROFİL"
+          source={require("../../../assets/icons/profile.png")}
+          onPress={() => {
+            // navigation.navigate("MyRecipes");
+            // navigation.closeDrawer();
+          }}
+        />
         <MenuButton
-          title="HOME"
+          title="ANASAYFA"
+          source={require("../../../assets/icons/home.png")}
           onPress={() => {
             navigation.navigate("Home");
             navigation.closeDrawer();
           }}
-        >
-          <SvgUri
-            width="24"
-            height="24"
-            source={require("../../../assets/icons/home.svg")}
-          />
-        </MenuButton>
+        />
         <MenuButton
-          title="CATEGORIES"
+          title="KATEGORİLER"
+          source={require("../../../assets/icons/category.png")}
           onPress={() => {
             navigation.navigate("Categories");
             navigation.closeDrawer();
           }}
-        >
-          <SvgUri
-            width="24"
-            height="24"
-            source={require("../../../assets/icons/category.svg")}
-          />
-        </MenuButton>
+        />
         <MenuButton
-          title="SEARCH"
+          title="ARA"
+          source={require("../../../assets/icons/search.png")}
           onPress={() => {
             navigation.navigate("Search");
             navigation.closeDrawer();
           }}
-        >
-          <SvgUri
-            width="24"
-            height="24"
-            source={require("../../../assets/icons/search.svg")}
-          />
-        </MenuButton>
+        />
+          <MenuButton
+          title="AYARLAR"
+          source={require("../../../assets/icons/setting.png")}
+          onPress={() => {
+            navigation.navigate("Setting");
+            navigation.closeDrawer();
+          }}
+        />
+        <MenuButton
+          title="KAYITLI TARİFLER"
+          source={require("../../../assets/icons/save.png")}
+          onPress={() => {
+            navigation.navigate("SaveRecipes");
+            navigation.closeDrawer();
+          }}
+        />
+        <MenuButton
+          title="PAYLAŞILAN TARİFLER"
+          source={require("../../../assets/icons/food.png")}
+          onPress={() => {
+            navigation.navigate("MyRecipes");
+            navigation.closeDrawer();
+          }}
+        />
+      
       </View>
     </View>
   );
@@ -56,6 +74,5 @@ export default function DrawerContainer({ navigation }) {
 DrawerContainer.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
-    closeDrawer: PropTypes.func.isRequired,
-  }).isRequired,
+  }),
 };
