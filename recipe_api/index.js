@@ -8,7 +8,7 @@ const commentRoutes = require('./routes/commentRoutes');
 const ingredientRoutes = require('./routes/ingredientRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
 const authMiddleware = require('./middleware/authMiddleware');
-const globalErrorHandler = require('./middleware/globalErrorHandler');  // Global error handler import
+const globalErrorHandler = require('./middleware/globalErrorHandler');  
 
 const app = express();
 
@@ -20,11 +20,11 @@ app.use(express.json());
 connectDB();
 
 // Routes
-app.use('/users', userRoutes);
-app.use('/recipes' , recipeRoutes);
-app.use('/comments', commentRoutes);
-app.use('/category', categoryRoutes);
-app.use('/ingredient', ingredientRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/recipes', recipeRoutes);
+app.use('/api/comments', commentRoutes);
+app.use('/api/category', categoryRoutes);
+app.use('/api/ingredient', ingredientRoutes);
 
 // Global Error Handler Middleware
 app.use(globalErrorHandler);

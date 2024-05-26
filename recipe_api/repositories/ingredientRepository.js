@@ -16,3 +16,7 @@ exports.updateIngredient = async (ingredientId, newData) => {
 exports.deleteIngredient = async (ingredientId) => {
     return await Ingredient.findByIdAndDelete(ingredientId);
 };
+exports.getIngredientAll = async () => {
+    return await Ingredient.find();
+};
+

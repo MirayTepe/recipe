@@ -1,6 +1,8 @@
 import { Text } from 'react-native';
 import React, { Component } from 'react';
 import { recipes, categories, ingredients } from './dataArrays';
+import axios from 'axios';
+const BASE_URL = 'http://localhost:5001'; 
 
 export function getCategoryById(categoryId) {
   let category;
@@ -129,3 +131,4 @@ export function getRecipesByRecipeName(recipeName) {
   });
   return recipesArray;
 }
+

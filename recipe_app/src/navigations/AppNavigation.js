@@ -1,7 +1,7 @@
-import React from 'react'
-import {createStackNavigator} from '@react-navigation/stack'
-import {NavigationContainer} from '@react-navigation/native'
-import {createDrawerNavigator} from '@react-navigation/drawer' 
+import React from "react";
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import HomeScreen from '../screens/Home/HomeScreen';
 import CategoriesScreen from '../screens/Categories/CategoriesScreen';
 import RecipeScreen from '../screens/Recipe/RecipeScreen';
@@ -10,26 +10,29 @@ import DrawerContainer from '../screens/DrawerContainer/DrawerContainer';
 import IngredientScreen from '../screens/Ingredient/IngredientScreen';
 import SearchScreen from '../screens/Search/SearchScreen';
 import IngredientsDetailsScreen from '../screens/IngredientsDetails/IngredientsDetailsScreen';
-import SettingScreen from"../screens/Setting/SettingScreen"
-import SaveRecipes from"../screens/SaveRecipes/SaveRecipesScreen"
-import MyRecipes from"../screens/MyRecipes/MyRecipes"
- const Stack = createStackNavigator();
+import SettingScreen from '../screens/Setting/SettingScreen';
+import SaveRecipes from '../screens/SaveRecipes/SaveRecipesScreen';
+import MyRecipes from '../screens/MyRecipes/MyRecipes';
+import LoginScreen from '../screens/Login/LoginScreen';
+import RegisterScreen from '../screens/Register/RegisterScreen';
+
+const Stack = createStackNavigator();
 
 function MainNavigator() {
-  return(
+  return (
     <Stack.Navigator
       screenOptions={{
-          headerTitleStyle: {
-            fontWeight: 'bold',
-            textAlign: 'center',
-            alignSelf: 'center',
-            flex: 1,
-          }
+        headerTitleStyle: {
+          fontWeight: 'bold',
+          textAlign: 'center',
+          alignSelf: 'center',
+          flex: 1,
+        }
       }}
     >
       <Stack.Screen name='Home' component={HomeScreen} />
-      <Stack.Screen name='Categories' component={CategoriesScreen}/>
-      <Stack.Screen name='Recipe' component={RecipeScreen}/>
+      <Stack.Screen name='Categories' component={CategoriesScreen} />
+      <Stack.Screen name='Recipe' component={RecipeScreen} />
       <Stack.Screen name='RecipesList' component={RecipesListScreen} />
       <Stack.Screen name='Ingredient' component={IngredientScreen} />
       <Stack.Screen name='Search' component={SearchScreen} />
@@ -37,39 +40,38 @@ function MainNavigator() {
       <Stack.Screen name='Setting' component={SettingScreen} />
       <Stack.Screen name='SaveRecipes' component={SaveRecipes} />
       <Stack.Screen name='MyRecipes' component={MyRecipes} />
-      
     </Stack.Navigator>
-  )
-} 
+  );
+}
 
-
-
- const Drawer = createDrawerNavigator();
+const Drawer = createDrawerNavigator();
 
 function DrawerStack() {
-  return(
+  return (
     <Drawer.Navigator
       drawerPosition='left'
       initialRouteName='Main'
       drawerStyle={{
         width: 250
       }}
-      screenOptions={{headerShown: false}}
-      drawerContent={({navigation})=> <DrawerContainer navigation={navigation}/>}
+      screenOptions={{ headerShown: false }}
+      drawerContent={({ navigation }) => <DrawerContainer navigation={navigation} />}
     >
       <Drawer.Screen name='Main' component={MainNavigator} />
     </Drawer.Navigator>
-  )
-} 
+  );
+}
 
-
- export default function AppContainer() {
-  return(
+export default function AppContainer() {
+  return (
     <NavigationContainer>
-      <DrawerStack/>
+      <Stack.Navigator headerMode="none">
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Register" component={RegisterScreen} />
+        <Stack.Screen name="Main" component={DrawerStack} />
+      </Stack.Navigator>
     </NavigationContainer>
-  )
-} 
- 
+  );
+}
 
 console.disableYellowBox = true;

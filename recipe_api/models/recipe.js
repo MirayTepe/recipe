@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
 
 const recipeSchema = new mongoose.Schema({
-  
-    categoryId: {
+
+
+    category: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Category' ,
         required: true
@@ -20,14 +21,19 @@ const recipeSchema = new mongoose.Schema({
         type: [String],
         required: true
     },
-    time: {
-        type: String,
+  
+    cookingTime: {
+        type: Number,
         required: true
     },
-    ingredients: {
-        type: [ingredientSchema], // ingredients şemasını kullanarak bir dizi oluşturuyoruz
-        required: true
-    },
+    ingredients: [{
+        ingredientId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Ingredient',
+            required: true
+        },
+        quantity: String 
+    }],
     description: {
         type: String,
         required: true
@@ -51,6 +57,9 @@ const recipeSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
+    },
+    video_url: {
+        type: String
     }
 });
 const Recipe = mongoose.model('Recipe', recipeSchema);

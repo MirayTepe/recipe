@@ -20,6 +20,12 @@ exports.login = async (req, res, next) => {
     const user = await userRepository.login(email, password);
     if (user) {
         res.status(200).json(user);     
+    } else {
+        res.status(401).json({ message: "Invalid credentials" });
     }
-   res.status(401).json({ message: "Invalid credentials" });
+};
+
+exports.getUserAll = async (req, res) => {
+    const users = await userRepository.getUserAll();
+    res.status(200).json(users);
 };

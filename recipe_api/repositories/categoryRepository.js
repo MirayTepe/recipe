@@ -16,3 +16,7 @@ exports.updateCategory = async (categoryId, newData) => {
 exports.deleteCategory = async (categoryId) => {
     return await Category.findByIdAndDelete(categoryId);
 };
+exports.getCategoryAll = async () => {
+    return await Category.find();
+};
+

@@ -22,5 +22,9 @@ exports.updateIngredient = async (req, res) => {
 exports.deleteIngredient = async (req, res) => {
     const { id } = req.params;
     await ingredientRepository.deleteIngredient(id);
-    res.status(204).end();
+    res.status(200).end();
+};
+exports.getIngredientAll = async (req, res) => {
+    const ingredients = await ingredientRepository.getIngredientAll();
+    res.status(200).json(ingredients);
 };

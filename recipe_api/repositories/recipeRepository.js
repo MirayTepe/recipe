@@ -22,3 +22,6 @@ exports.addCommentToRecipe = async (recipeId, commentId) => {
     recipe.comments.push(commentId);
     await recipe.save();
 };
+exports.getRecipeAll = async () => {
+    return await Recipe.find();
+};
