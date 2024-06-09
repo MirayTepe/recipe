@@ -2,14 +2,13 @@ import React, { useEffect, useLayoutEffect, useState } from "react";
 import { FlatList, Text, View, Image, TouchableHighlight, Pressable } from "react-native";
 import styles from "./styles";
 import MenuImage from "../../components/MenuImage/MenuImage";
-import { getCategoryName, getRecipesByRecipeName, getRecipesByCategoryName, getRecipesByIngredientName } from "../../data/MockDataAPI";
 import { TextInput } from "react-native-gesture-handler";
 
 export default function SearchScreen(props) {
   const { navigation } = props;
-
   const [value, setValue] = useState("");
   const [data, setData] = useState([]);
+  const [error, setError] = useState(null);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -22,14 +21,19 @@ export default function SearchScreen(props) {
       ),
       headerTitle: () => (
         <View style={styles.searchContainer}>
-          <Image style={styles.searchIcon} source={require("../../../assets/icons/search.png")} />
+          <Pressable onPress={() => handleSearch(value)}>
+            <Image style={styles.searchIcon} source={require("../../../assets/icons/search.png")} />
+          </Pressable>
           <TextInput
             style={styles.searchInput}
-            onChangeText={handleSearch}
+            onChangeText={(text) => setValue(text)}
             value={value}
+            placeholder="Tarif ara..."
+            placeholderTextColor="#999"
+            onSubmitEditing={() => handleSearch(value)}
           />
           <Pressable onPress={() => handleSearch("")}>
-          <Image style={styles.searchIcon} source={require("../../../assets/icons/close.png")} />
+            <Image style={styles.searchIcon} source={require("../../../assets/icons/close.png")} />
           </Pressable>
         </View>
       ),
@@ -39,18 +43,23 @@ export default function SearchScreen(props) {
 
   useEffect(() => {}, [value]);
 
-  const handleSearch = (text) => {
+  const handleSearch = async (text) => {
     setValue(text);
-    var recipeArray1 = getRecipesByRecipeName(text);
-    var recipeArray2 = getRecipesByCategoryName(text);
-    var recipeArray3 = getRecipesByIngredientName(text);
-    var aux = recipeArray1.concat(recipeArray2);
-    var recipeArray = [...new Set(aux)];
-
-    if (text == "") {
+    setError(null);
+    if (text === "") {
       setData([]);
-    } else {
-      setData(recipeArray);
+      return;
+    }
+    try {
+      const response = await fetch(`http://192.168.1.35:5001/api/recipes/search?query=${text}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const result = await response.json();
+      setData(result);
+    } catch (error) {
+      console.error("Error fetching recipes:", error);
+      setError("Veri alınırken bir hata oluştu. Lütfen tekrar deneyin.");
     }
   };
 
@@ -59,18 +68,30 @@ export default function SearchScreen(props) {
   };
 
   const renderRecipes = ({ item }) => (
-    <TouchableHighlight underlayColor="rgba(73,182,77,0.9)" onPress={() => onPressRecipe(item)}>
-      <View style={styles.container}>
+    <TouchableHighlight  
+    style={styles.touchable} 
+    underlayColor="transparent"
+    onPress={() => onPressRecipe(item)}>
+      <View style={[styles.categoriesItemContainer, { backgroundColor: '#fcfcfc' }]}>
         <Image style={styles.photo} source={{ uri: item.photo_url }} />
         <Text style={styles.title}>{item.title}</Text>
-        <Text style={styles.category}>{getCategoryName(item.categoryId)}</Text>
+        <Text style={styles.category}>{item.category.name}</Text>
       </View>
     </TouchableHighlight>
   );
 
   return (
     <View>
-      <FlatList vertical showsVerticalScrollIndicator={false} numColumns={2} data={data} renderItem={renderRecipes} keyExtractor={(item) => `${item.recipeId}`} />
+      {error && <Text style={styles.errorText}>{error}</Text>}
+      <FlatList
+        vertical
+        showsVerticalScrollIndicator={false}
+        numColumns={2}
+        contentContainerStyle={styles.listContent}
+        data={data}
+        renderItem={renderRecipes}
+        keyExtractor={(item) => `${item._id}`}
+      />
     </View>
   );
 }

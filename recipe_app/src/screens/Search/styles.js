@@ -1,34 +1,77 @@
 import { StyleSheet } from "react-native";
-import { RecipeCard } from "../../AppStyles";
 
 const styles = StyleSheet.create({
-  container: RecipeCard.container,
-  photo: RecipeCard.photo,
-  title: RecipeCard.title,
-  category: RecipeCard.category,
-  btnIcon: {
-    height: 14,
-    width: 14,
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    paddingHorizontal: 10,
+    paddingTop: 20,
   },
-  searchContainer: { 
-    flexDirection: "row", 
-    alignItems: "center", 
-    backgroundColor: "#EDEDED", 
-    borderRadius: 10, 
-    width: 250,
-    justifyContent: "space-around"
+  touchable: {
+    flex: 1,
+    margin: 10,
+    borderRadius: 5,
+    overflow: "hidden",
   },
-  searchIcon: { 
-    width: 20, 
-    height: 20, 
-    tintColor: 'grey' 
+  categoriesItemContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 10,
+    marginBottom: 10,
+    borderRadius: 5,
+    borderColor: "#ccc",
+    borderWidth: 1,
+  },
+  photo: {
+    width: 150,
+    height: 150,
+    marginBottom: 10,
+    borderRadius: 75,
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 5,
+    textAlign: "center",
+  },
+  category: {
+    fontSize: 14,
+    color: "#666",
+    textAlign: "center",
+  },
+  searchContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#EDEDED",
+    borderRadius: 10,
+    width: 280,
+    padding: 5,
+    justifyContent: "space-between",
+  },
+  searchIcon: {
+    width: 24,
+    height: 24,
+    tintColor: 'grey',
   },
   searchInput: {
+    flex: 1,
+    marginLeft: 10,
     backgroundColor: "#EDEDED",
     color: "black",
-    width: 180,
-    height: 50,
-  }
+    height: 40,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+  },
+  errorText: {
+    color: "red",
+    textAlign: "center",
+    marginVertical: 10,
+  },
+  listContent: {
+    paddingBottom: 2,
+
+  },
 });
 
 export default styles;

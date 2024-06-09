@@ -7,8 +7,7 @@ const recipeRoutes = require('./routes/recipeRoutes');
 const commentRoutes = require('./routes/commentRoutes');
 const ingredientRoutes = require('./routes/ingredientRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
-const authMiddleware = require('./middleware/authMiddleware');
-const globalErrorHandler = require('./middleware/globalErrorHandler');  
+
 
 const app = express();
 
@@ -26,8 +25,6 @@ app.use('/api/comments', commentRoutes);
 app.use('/api/category', categoryRoutes);
 app.use('/api/ingredient', ingredientRoutes);
 
-// Global Error Handler Middleware
-app.use(globalErrorHandler);
 
 const port = process.env.PORT || 5000;
 

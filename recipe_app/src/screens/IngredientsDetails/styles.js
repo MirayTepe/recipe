@@ -1,35 +1,55 @@
-import { StyleSheet, Dimensions } from 'react-native';
-// screen sizing
-const { width, height } = Dimensions.get('window');
-// orientation must fixed
-const SCREEN_WIDTH = width < height ? width : height;
-
-const numColumns = 3;
-// item size
-const RECIPE_ITEM_HEIGHT = 100;
-const RECIPE_ITEM_OFFSET = 10;
-const RECIPE_ITEM_MARGIN = RECIPE_ITEM_OFFSET * 2;
+import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    margin: RECIPE_ITEM_OFFSET,
-    marginTop: 30,
-    width: (SCREEN_WIDTH - RECIPE_ITEM_MARGIN) / numColumns - RECIPE_ITEM_OFFSET,
-    height: RECIPE_ITEM_HEIGHT + 60
+    padding: 20,
+    backgroundColor: '#fff'
   },
   title: {
-    margin: 10,
-    marginBottom: 5,
-    color: 'black',
-    fontSize: 13,
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20
+  },
+  detailsContainer: {
+    marginBottom: 20
+  },
+  itemContainer: {
+    marginBottom: 10
+  },
+  label: {
+    fontSize: 16,
+    fontWeight: 'bold'
+  },
+  value: {
+    fontSize: 16
+  },
+  image: {
+    width: 200,
+    height: 200,
+    resizeMode: 'contain'
+  },
+  loadingIndicator: {
+    marginTop: 20
+  },
+  errorText: {
+    fontSize: 18,
+    color: 'red',
     textAlign: 'center'
   },
-  photo: {
-    width: (SCREEN_WIDTH - RECIPE_ITEM_MARGIN) / numColumns - RECIPE_ITEM_OFFSET,
-    height: RECIPE_ITEM_HEIGHT,
-    borderRadius: 60
+  recipesContainer: {
+    marginTop: 20
+  },
+  subTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10
+  },
+  recipeItem: {
+    marginBottom: 5
+  },
+  recipeText: {
+    fontSize: 16
   }
 });
 

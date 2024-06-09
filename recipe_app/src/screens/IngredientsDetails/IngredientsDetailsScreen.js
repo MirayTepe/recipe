@@ -1,42 +1,102 @@
-import React, { useLayoutEffect } from "react";
-import { FlatList, Text, View, Image, TouchableHighlight } from "react-native";
-import styles from "./styles";
-import { getIngredientName, getAllIngredients } from "../../data/MockDataAPI";
+import React, { useState, useEffect } from 'react';
+import { View, Text, Image, ActivityIndicator, ScrollView, StyleSheet } from 'react-native';
+import axios from 'axios';
 
-export default function IngredientsDetailsScreen(props) {
-  const { navigation, route } = props;
+const IngredientDetailsScreen = ({ route }) => {
+  const { item } = route.params;
+  const [ingredient, setIngredient] = useState(null);
+  const [recipes, setRecipes] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const item = route.params?.ingredients;
-  const ingredientsArray = getAllIngredients(item);
+  useEffect(() => {
+    const fetchIngredientDetails = async () => {
+      if (!item || !item.id) {
+        setLoading(false);
+        return;
+      }
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      title: route.params?.title,
-      headerTitleStyle: {
-        fontSize: 16,
-      },
-    });
-  }, []);
+      try {
+        const ingredientResponse = await axios.get(`http://192.168.1.35:5001/api/ingredient/${item.id}`);
+        setIngredient(ingredientResponse.data);
 
-  const onPressIngredient = (item) => {
-    let name = getIngredientName(item.ingredientId);
-    let ingredient = item.ingredientId;
-    navigation.navigate("Ingredient", { ingredient, name });
+        const recipesResponse = await axios.get(`http://192.168.1.35:5001/api/recipes/ingredient/${item.id}`);
+        setRecipes(recipesResponse.data);
+        
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchIngredientDetails();
+  }, [item]);
+
+  if (loading) {
+    return <ActivityIndicator size="large" color="#0000ff" style={styles.loadingIndicator} />;
+  }
+
+  if (!ingredient) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.title}>Ingredient Details</Text>
+        <Text style={styles.errorText}>Ingredient details not available</Text>
+      </View>
+    );
+  }
+
+  const renderRecipes = () => {
+    if (recipes.length > 0) {
+      return (
+        <View style={styles.recipesContainer}>
+          <Text style={styles.subTitle}>Recipes using this Ingredient:</Text>
+          {recipes.map((recipe) => (
+            <View key={recipe._id} style={styles.recipeItem}>
+              <Text style={styles.recipeText}>{recipe.title}</Text>
+            </View>
+          ))}
+        </View>
+      );
+    }
+    return null;
   };
 
-  const renderIngredient = ({ item }) => (
-    <TouchableHighlight underlayColor="rgba(73,182,77,0.9)" onPress={() => onPressIngredient(item[0])}>
-      <View style={styles.container}>
-        <Image style={styles.photo} source={{ uri: item[0].photo_url }} />
-        <Text style={styles.title}>{item[0].name}</Text>
-        <Text style={{ color: "grey" }}>{item[1]}</Text>
-      </View>
-    </TouchableHighlight>
-  );
-
   return (
-    <View>
-      <FlatList vertical showsVerticalScrollIndicator={false} numColumns={3} data={ingredientsArray} renderItem={renderIngredient} keyExtractor={(item) => `${item.recipeId}`} />
-    </View>
+    <ScrollView style={styles.container}>
+      <Text style={styles.title}>Ingredient Details</Text>
+      <View style={styles.detailsContainer}>
+        <View style={styles.itemContainer}>
+          <Text style={styles.label}>Name:</Text>
+          <Text style={styles.value}>{ingredient.name}</Text>
+        </View>
+        <View style={styles.itemContainer}>
+          <Text style={styles.label}>Description:</Text>
+          <Text style={styles.value}>{ingredient.description}</Text>
+        </View>
+        <View style={styles.itemContainer}>
+          <Text style={styles.label}>Calories:</Text>
+          <Text style={styles.value}>{ingredient.calories}</Text>
+        </View>
+        <View style={styles.itemContainer}>
+          <Text style={styles.label}>Photo:</Text>
+          <Image style={styles.image} source={{ uri: ingredient.photo_url }} />
+        </View>
+        <View style={styles.itemContainer}>
+          <Text style={styles.label}>Protein:</Text>
+          <Text style={styles.value}>{ingredient.nutrients.protein}</Text>
+        </View>
+        <View style={styles.itemContainer}>
+          <Text style={styles.label}>Fat:</Text>
+          <Text style={styles.value}>{ingredient.nutrients.fat}</Text>
+        </View>
+        <View style={styles.itemContainer}>
+          <Text style={styles.label}>Carbohydrates:</Text>
+          <Text style={styles.value}>{ingredient.nutrients.carbohydrates}</Text>
+        </View>
+      </View>
+      {renderRecipes()}
+    </ScrollView>
   );
-}
+};
+
+export default IngredientDetailsScreen;

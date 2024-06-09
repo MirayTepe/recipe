@@ -1,39 +1,33 @@
 import { StyleSheet } from 'react-native';
-import { RecipeCard } from '../../AppStyles';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    paddingHorizontal: 20,
+    paddingTop: 20,
   },
-  imageContainer: {
-    borderBottomWidth: 0.4,
-    marginBottom: 10,
-    borderBottomColor: "grey",
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
   },
-  photoIngredient: {
-    width: '100%',
-    height: 250,
-    alignSelf: 'center'
+  itemContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
   },
-  ingredientInfo: {
-    color: 'black',
-    margin: 10,
-    fontSize: 19,
-    textAlign: 'left',
-    fontWeight: 'bold'
+  itemImage: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    marginRight: 10,
   },
-  recipeContainer: {
-    ...RecipeCard.container,
-    marginVertical: 10,
-    flex: 1,
-    backgroundColor: '#fcfcfc',
-    borderRadius: 20, 
-    overflow: 'hidden',
+  itemName: {
+    fontSize: 18,
   },
-  photo: RecipeCard.photo,
-  title: RecipeCard.title,
-  category: RecipeCard.category
+  listContainer: {
+    paddingBottom: 20,
+  },
 });
 
 export default styles;

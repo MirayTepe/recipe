@@ -6,5 +6,5 @@ exports.createComment = async (commentData) => {
 };
 
 exports.getCommentById = async (commentId) => {
-    return await Comment.findById(commentId).populate('createdBy');
+    return await Comment.findById(commentId).populate(['createdBy', 'recipe']);
 };

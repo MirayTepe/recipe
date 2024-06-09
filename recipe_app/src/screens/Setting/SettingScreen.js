@@ -1,39 +1,29 @@
-// SettingScreen.js
-
-import React, { useState } from 'react';
+import React, { Component } from 'react';
 import { View, Text, Switch, SectionList } from 'react-native';
 import styles from './styles';
 
-export default function SettingScreen() {
-  const [notificationsEnabled, setNotificationsEnabled] = useState(true);
-  const [darkModeEnabled, setDarkModeEnabled] = useState(false);
+class SettingScreen extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      notificationsEnabled: true,
+      darkModeEnabled: false,
+    };
+  }
 
-  const toggleNotifications = () => {
-    setNotificationsEnabled(prevState => !prevState);
+  toggleNotifications = () => {
+    this.setState(prevState => ({
+      notificationsEnabled: !prevState.notificationsEnabled
+    }));
   };
 
-  const toggleDarkMode = () => {
-    setDarkModeEnabled(prevState => !prevState);
+  toggleDarkMode = () => {
+    this.setState(prevState => ({
+      darkModeEnabled: !prevState.darkModeEnabled
+    }));
   };
 
-  const sections = [
-    {
-      title: 'Genel',
-      data: [
-        { label: 'Bildirimler', value: notificationsEnabled, toggle: toggleNotifications },
-        { label: 'Gece Modu', value: darkModeEnabled, toggle: toggleDarkMode },
-      ],
-    },
-    {
-      title: 'Hesap',
-      data: [
-        { label: 'Email Bildirimleri', value: true, toggle: () => {} },
-        { label: 'Şifre Değiştir', value: true, toggle: () => {} },
-      ],
-    },
-  ];
-
-  const renderItem = ({ item }) => (
+  renderItem = ({ item }) => (
     <View style={styles.settingItem}>
       <Text style={styles.settingLabel}>{item.label}</Text>
       <View style={styles.switchContainer}>
@@ -50,18 +40,39 @@ export default function SettingScreen() {
     </View>
   );
 
-  const renderSectionHeader = ({ section: { title } }) => (
+  renderSectionHeader = ({ section: { title } }) => (
     <Text style={styles.sectionHeader}>{title}</Text>
   );
 
-  return (
-    <View style={styles.container}>
-      <SectionList
-        sections={sections}
-        keyExtractor={(item, index) => item + index}
-        renderItem={renderItem}
-        renderSectionHeader={renderSectionHeader}
-      />
-    </View>
-  );
+  render() {
+    const sections = [
+      {
+        title: 'Genel',
+        data: [
+          { label: 'Bildirimler', value: this.state.notificationsEnabled, toggle: this.toggleNotifications },
+          { label: 'Gece Modu', value: this.state.darkModeEnabled, toggle: this.toggleDarkMode },
+        ],
+      },
+      {
+        title: 'Hesap',
+        data: [
+          { label: 'Email Bildirimleri', value: true, toggle: () => {} },
+          { label: 'Şifre Değiştir', value: true, toggle: () => {} },
+        ],
+      },
+    ];
+
+    return (
+      <View style={styles.container}>
+        <SectionList
+          sections={sections}
+          keyExtractor={(item, index) => item + index}
+          renderItem={this.renderItem}
+          renderSectionHeader={this.renderSectionHeader}
+        />
+      </View>
+    );
+  }
 }
+
+export default SettingScreen;

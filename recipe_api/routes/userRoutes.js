@@ -1,11 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
-
+const checkAuthenticated = require('../middleware/checkAuthenticated');
 router.get('/', userController.getUserAll);
 router.post('/register', userController.createUser);
 router.post('/login', userController.login);
+router.post('/like', checkAuthenticated, userController.likeRecipe);
+router.post('/save', userController.saveRecipe);
+router.post('/save-to-favorites', checkAuthenticated, userController.saveRecipeToUserFavorites);
+router.get('/saved-recipes/:userId', checkAuthenticated, userController.getSavedRecipes);
+router.get('/created-recipes', checkAuthenticated, userController.getUserCreatedRecipes);
 router.get('/:userId', userController.getUserById);
+router.put('/update/:userId', userController.updateUser);
 router.get('/email/:email', userController.getUserByEmail);
-
-module.exports = router;
+module.exports = router; 

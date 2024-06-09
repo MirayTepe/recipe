@@ -11,7 +11,6 @@ exports.getIngredientById = async (req, res) => {
     const ingredient = await ingredientRepository.getIngredientById(id);
     res.status(200).json(ingredient);
 };
-
 exports.updateIngredient = async (req, res) => {
     const { id } = req.params;
     const newData = req.body;

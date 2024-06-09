@@ -1,5 +1,3 @@
-// styles.js
-
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -18,11 +16,17 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   recipeName: {
-    fontSize: 18,
+    fontSize: 16, 
     fontWeight: 'bold',
     color: '#333',
-    marginRight: 10,
+    flex: 1, 
   },
+  photo: {
+    width: 80, 
+    height: 80, 
+    marginRight: 10, 
+    borderRadius: 10,
+  }
 });
 
 export default styles;

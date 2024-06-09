@@ -1,28 +1,38 @@
-import React, { useState, useEffect } from "react";
-import { FlatList, Text, View, Image, TouchableHighlight } from "react-native";
+import React, { useLayoutEffect, useState, useEffect } from "react";
+import { FlatList, Text, View, TouchableHighlight, Image, ScrollView, Dimensions } from "react-native";
 import styles from "./styles";
+import MenuImage from "../../components/MenuImage/MenuImage";
 
-export default function HomeScreen(props) {
-  const { navigation } = props;
+const { width: viewportWidth } = Dimensions.get("window");
+
+export default function HomeScreen({ navigation }) {
   const [recipes, setRecipes] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => (
+        <MenuImage
+          onPress={() => {
+            navigation.openDrawer();
+          }}
+        />
+      ),
+      headerRight: () => <View />,
+    });
+  }, [navigation]);
 
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
-        const response = await fetch("http://192.168.1.35:5001/api/recipes", { method: 'GET' });
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
+        const response = await fetch('http://192.168.1.35:5001/api/recipes', { method: 'GET' });
+        if (response.ok) {
+          const data = await response.json();
+          setRecipes(data);
+        } else {
+          console.error('Failed to fetch recipes');
         }
-        const data = await response.json();
-  
-        setRecipes(data);
       } catch (error) {
-        console.error('Error fetching recipes:', error.message);
-        setError('Error fetching recipes: ' + error.message);
-      } finally {
-        setLoading(false);
+        console.error('Error fetching recipes:', error);
       }
     };
 
@@ -33,44 +43,39 @@ export default function HomeScreen(props) {
     navigation.navigate("Recipe", { item });
   };
 
-  const renderRecipe = ({ item }) => {
-    return (
-      <TouchableHighlight underlayColor="rgba(73,182,77,0.9)" onPress={() => onPressRecipe(item)}>
-        <View style={styles.container}>
-          <Image style={styles.photo} source={{ uri: item.photo_url }} />
-          <Text style={styles.title}>{item.title}</Text>
-          <Text style={styles.category}>{item.category.name}</Text>
+  const renderRecipes = ({ item }) => (
+    <TouchableHighlight 
+      style={styles.touchable} 
+      underlayColor="transparent"
+      onPress={() => onPressRecipe(item)}
+    >
+      <View style={[styles.categoriesItemContainer, { backgroundColor: '#fcfcfc' }]}>
+        <Image style={styles.photo} source={{ uri: item.photo_url }} />
+        <Text style={styles.title}>{item.title}</Text>
+        <Text style={styles.category}>{item.category.name}</Text>
+        {/* Kişinin profil fotoğrafı ve adı-soyadı */}
+         <View style={styles.profileSection}>
+                    <Image
+                        style={styles.profileImage}
+                        source={{ uri: item.createdBy.profilePicture }}
+                    />
+                    <Text style={styles.profileName}>{item.createdBy.fullName}</Text>
+                
+         </View>
         </View>
-      </TouchableHighlight>
-    );
-  };
-
-  if (loading) {
-    return (
-      <View style={styles.container}>
-        <Text>Loading...</Text>
-      </View>
-    );
-  }
-
-  if (error) {
-    return (
-      <View style={styles.container}>
-        <Text>{error}</Text>
-      </View>
-    );
-  }
+    
+    </TouchableHighlight>
+  );
 
   return (
-    <View style={styles.container}>
-      
-      <FlatList
-        vertical
-        showsVerticalScrollIndicator={false}
-        numColumns={2}
-        data={recipes}
-        renderItem={renderRecipe}
-        keyExtractor={(item) => item._id}
+    <View>
+      <FlatList 
+        vertical 
+        showsVerticalScrollIndicator={false} 
+        numColumns={1} // Tek sütun olarak güncellendi
+        data={recipes} 
+        renderItem={renderRecipes} 
+        keyExtractor={(item) => `${item._id}`} 
       />
     </View>
   );

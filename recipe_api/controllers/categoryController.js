@@ -27,4 +27,4 @@ exports.deleteCategory = async (req, res) => {
 exports.getCategoryAll = async (req, res) => {
     const categories = await categoryRepository.getCategoryAll();
     res.status(200).json(categories);
-};
+}; 

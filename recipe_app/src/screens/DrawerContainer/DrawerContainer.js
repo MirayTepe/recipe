@@ -1,28 +1,39 @@
 import React from "react";
-import { View } from "react-native";
+import { View, Image } from "react-native";
 import PropTypes from "prop-types";
 import styles from "./styles";
 import MenuButton from "../../components/MenuButton/MenuButton";
+import CreateRecipeButton from "../../components/CreateRecipeButton/CreateRecipeButton"; 
 
-export default function DrawerContainer(props) {
-  const { navigation } = props;
+export default function DrawerContainer({ navigation }) {
+  const handleCreateRecipe = () => {
+    navigation.navigate("CreateRecipe");
+    navigation.closeDrawer();
+  };
+
   return (
     <View style={styles.content}>
       <View style={styles.container}>
-       <MenuButton
-          title="PROFİL"
-          source={require("../../../assets/icons/profile.png")}
-          onPress={() => {
-            // navigation.navigate("MyRecipes");
-            // navigation.closeDrawer();
-          }}
+        <Image
+          source={require("../../../assets/icon.png")}
+          style={{ width: 40, height: 40 }}
         />
+        <CreateRecipeButton onPress={handleCreateRecipe} />
+    
         <MenuButton
           title="ANASAYFA"
           source={require("../../../assets/icons/home.png")}
           onPress={() => {
             navigation.navigate("Home");
             navigation.closeDrawer();
+          }}
+        />
+        <MenuButton
+          title="PROFİL"
+          source={require("../../../assets/icons/profile.png")}
+          onPress={() => {
+             navigation.navigate("ProfileScreen");
+             navigation.closeDrawer();
           }}
         />
         <MenuButton
@@ -41,7 +52,7 @@ export default function DrawerContainer(props) {
             navigation.closeDrawer();
           }}
         />
-          <MenuButton
+        <MenuButton
           title="AYARLAR"
           source={require("../../../assets/icons/setting.png")}
           onPress={() => {
@@ -65,7 +76,14 @@ export default function DrawerContainer(props) {
             navigation.closeDrawer();
           }}
         />
-      
+        <MenuButton
+          title="ÇIKIŞ YAP"
+          source={require("../../../assets/icons/LogOut.png")}
+          onPress={() => {
+            navigation.navigate("Login");
+            navigation.closeDrawer();
+          }}
+        />
       </View>
     </View>
   );
@@ -74,5 +92,6 @@ export default function DrawerContainer(props) {
 DrawerContainer.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
+    closeDrawer: PropTypes.func.isRequired,
   }),
 };

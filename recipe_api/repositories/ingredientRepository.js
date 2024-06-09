@@ -19,4 +19,3 @@ exports.deleteIngredient = async (ingredientId) => {
 exports.getIngredientAll = async () => {
     return await Ingredient.find();
 };
-

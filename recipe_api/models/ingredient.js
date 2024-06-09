@@ -13,13 +13,13 @@ const ingredientSchema = new Schema({
     type: Number
   },
   nutrients: {
-    type: Map, // veya Object
+    type: Map, 
     of: Number
   },
   photo_url: {
     type: String,
     required: true
   }
-});
+}, { timestamps: true });
 
 module.exports = mongoose.model('Ingredient', ingredientSchema);
